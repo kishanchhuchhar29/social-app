@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+
+import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
+import Profile from "./pages/profile/Profile";
+import Register from "./pages/register/Register";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
+
+// import PersonIcon from '@mui/icons-material/Person';
 
 function App() {
+  // </Home/>
+  //if you find home page then change profile to home and in rightbar chang Profilerightbar to homerightbar
+  const {user}=useContext(AuthContext);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+     <Router>
+      < Routes>
+        <Route exact path='/' element={user ? <Home />: <Register/>}>
+          
+        </Route>
+        <Route  exact path="/login" element={user? <Navigate to="/"/> :<Login />}>
+        </Route>
+        <Route exact path="/register" element={user? <Navigate to="/"/> :<Register />}>
+        </Route>
+        <Route path="/profile/:username" element={<Profile />}>
+        
+        </Route>
+      </Routes>
+     </Router>
+  )
+
 }
 
 export default App;
